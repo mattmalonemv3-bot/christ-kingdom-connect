@@ -1,0 +1,67 @@
+{
+  "expo": {
+    "name": "Christ Kingdom Connect",
+    "slug": "christ-kingdom-connect",
+    "scheme": "christkingdomconnect",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "backgroundColor": "#0A0A0E",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0A0A0E"
+    },
+    "assetBundlePatterns": ["**/*"],
+
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.christkingdomconnect.app",
+      "buildNumber": "1",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Christ Kingdom Connect uses your camera so you can take photos and videos to share in posts and stories.",
+        "NSPhotoLibraryUsageDescription": "Christ Kingdom Connect accesses your photo library so you can attach photos and videos to posts, stories, and your profile picture.",
+        "NSMicrophoneUsageDescription": "Christ Kingdom Connect uses your microphone to record audio when you add a video to a story."
+      }
+    },
+
+    "android": {
+      "package": "com.christkingdomconnect.app",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0A0A0E"
+      },
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE",
+        "RECORD_AUDIO"
+      ]
+    },
+
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Christ Kingdom Connect accesses your photo library so you can attach photos and videos to posts, stories, and your profile picture.",
+          "cameraPermission": "Christ Kingdom Connect uses your camera so you can take photos and videos to share in posts and stories."
+        }
+      ],
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#C9A45C"
+        }
+      ]
+    ],
+
+    "extra": {
+      "eas": {
+        "projectId": "REPLACE_WITH_YOUR_EAS_PROJECT_ID"
+      }
+    }
+  }
+}
