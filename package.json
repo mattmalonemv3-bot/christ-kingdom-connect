@@ -1,0 +1,29 @@
+{
+  "name": "christ-kingdom-connect",
+  "version": "1.0.0",
+  "main": "expo/AppEntry",
+  "dependencies": {
+    "@react-native-async-storage/async-storage": "2.2.0",
+    "@supabase/supabase-js": "^2.110.7",
+    "expo": "~54.0.0",
+    "expo-av": "^16.0.8",
+    "expo-constants": "~57.0.6",
+    "expo-device": "~57.0.1",
+    "expo-image-manipulator": "~57.0.5",
+    "expo-image-picker": "~57.0.5",
+    "expo-notifications": "~57.0.6",
+    "expo-status-bar": "~57.0.1",
+    "lucide-react-native": "^1.25.0",
+    "react": "18.3.1",
+    "react-native": "0.76.5",
+    "react-native-svg": "15.15.4",
+    "react-native-url-polyfill": "^4.0.0"
+  },
+  "scripts": {
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
+  },
+  "private": true
+}
