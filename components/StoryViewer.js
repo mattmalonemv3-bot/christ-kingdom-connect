@@ -1,14 +1,3 @@
-// components/StoryViewer.js
-//
-// Full-screen modal that plays through one author's stories in order,
-// Instagram-style: tap right half to advance, left half to go back.
-// Images auto-advance after IMAGE_DURATION_MS; videos auto-advance
-// when playback finishes (or after their stored duration, as a
-// fallback if playback status isn't available yet).
-//
-// Usage:
-//   {viewerGroup && <StoryViewer group={viewerGroup} onClose={() => setViewerGroup(null)} />}
-
 import React, { useState, useEffect, useRef } from "react";
 import { View, Image, TouchableOpacity, Text, StyleSheet, Animated, Dimensions } from "react-native";
 import { Video, ResizeMode } from "expo-av";
@@ -29,9 +18,7 @@ export default function StoryViewer({ group, onClose }) {
   useEffect(() => {
     if (!group) return;
     progress.setValue(0);
-
-    if (isVideo) return; // video advances via onPlaybackStatusUpdate below
-
+    if (isVideo) return;
     const anim = Animated.timing(progress, { toValue: 1, duration: IMAGE_DURATION_MS, useNativeDriver: false });
     anim.start(({ finished }) => finished && advance());
     return () => anim.stop();
@@ -40,11 +27,8 @@ export default function StoryViewer({ group, onClose }) {
   if (!group || !current) return null;
 
   const advance = () => {
-    if (index < group.stories.length - 1) {
-      setIndex((i) => i + 1);
-    } else {
-      onClose();
-    }
+    if (index < group.stories.length - 1) setIndex((i) => i + 1);
+    else onClose();
   };
 
   const goBack = () => {
@@ -53,9 +37,7 @@ export default function StoryViewer({ group, onClose }) {
 
   const handleVideoStatus = (status) => {
     if (!status.isLoaded) return;
-    if (status.durationMillis) {
-      progress.setValue(status.positionMillis / status.durationMillis);
-    }
+    if (status.durationMillis) progress.setValue(status.positionMillis / status.durationMillis);
     if (status.didJustFinish) advance();
   };
 
@@ -75,7 +57,11 @@ export default function StoryViewer({ group, onClose }) {
         <Image source={{ uri: current.media_url }} style={styles.media} resizeMode="cover" />
       )}
 
-      {/* Progress bars — one per story in the group */}
+      <View style={styles.tapZones}>
+        <TouchableOpacity style={styles.tapLeft} onPress={goBack} activeOpacity={1} />
+        <TouchableOpacity style={styles.tapRight} onPress={advance} activeOpacity={1} />
+      </View>
+
       <View style={styles.progressRow}>
         {group.stories.map((s, i) => (
           <View key={s.id} style={styles.progressTrack}>
@@ -84,9 +70,7 @@ export default function StoryViewer({ group, onClose }) {
                 styles.progressFill,
                 {
                   width:
-                    i < index
-                      ? "100%"
-                      : i === index
+                    i < index ? "100%" : i === index
                       ? progress.interpolate({ inputRange: [0, 1], outputRange: ["0%", "100%"] })
                       : "0%",
                 },
@@ -112,12 +96,6 @@ export default function StoryViewer({ group, onClose }) {
             <X size={22} color="#F2EFE9" />
           </TouchableOpacity>
         </View>
-      </View>
-
-      {/* Tap zones */}
-      <View style={styles.tapZones}>
-        <TouchableOpacity style={styles.tapLeft} onPress={goBack} activeOpacity={1} />
-        <TouchableOpacity style={styles.tapRight} onPress={advance} activeOpacity={1} />
       </View>
     </View>
   );
@@ -145,4 +123,3 @@ const styles = StyleSheet.create({
   tapLeft: { flex: 1 },
   tapRight: { flex: 2 },
 });
-
