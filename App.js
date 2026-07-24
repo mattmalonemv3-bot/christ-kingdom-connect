@@ -1,4 +1,3 @@
-// App.js
 import React, { useState, useEffect } from "react";
 import { View, TouchableOpacity, Text, StyleSheet, ActivityIndicator } from "react-native";
 import { Home, Compass, Calendar, Tv, User } from "lucide-react-native";
@@ -28,16 +27,15 @@ const TABS = [
 ];
 
 export default function App() {
-  const [session, setSession] = useState(undefined); // undefined = loading, null = signed out
+  const [session, setSession] = useState(undefined);
   const [profile, setProfile] = useState(null);
   const [tab, setTab] = useState("Feed");
-  const [subScreen, setSubScreen] = useState(null); // 'prayerWall' | 'moderationQueue' | null
+  const [subScreen, setSubScreen] = useState(null);
 
   const { ReportModal, openReport } = useReportModal(profile?.id);
 
   useEffect(() => {
-    loadBlockedTerms().catch(() => {}); // best-effort; composer just skips the pre-check if this fails
-
+    loadBlockedTerms().catch(() => {});
     supabase.auth.getSession().then(({ data }) => setSession(data.session));
     const unsubscribe = onAuthStateChange((s) => setSession(s));
     return unsubscribe;
@@ -53,7 +51,7 @@ export default function App() {
 
   useEffect(() => {
     if (!profile) return;
-    registerForPushNotifications(profile.id).catch(() => {}); // best-effort — see lib/notifications.js
+    registerForPushNotifications(profile.id).catch(() => {});
   }, [profile?.id]);
 
   if (session === undefined || (session && !profile)) {
@@ -108,7 +106,7 @@ export default function App() {
               style={styles.tabButton}
               onPress={() => {
                 setTab(t.key);
-                setSubScreen(null); // always land on the tab's root screen
+                setSubScreen(null);
               }}
             >
               <t.icon size={22} color={active ? colors.gold : "#6E6C78"} />
